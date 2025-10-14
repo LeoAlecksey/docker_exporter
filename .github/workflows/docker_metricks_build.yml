@@ -1,0 +1,30 @@
+name: build_docker_metricks
+
+on:
+  push:
+    branches: 
+    - main
+
+jobs:
+
+## Сборка Docker-image and Push on DockerHub ##
+####################################################
+
+  docker_image_build_and_push:
+    name: Publish docker_metricks to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Output Run Attempt
+        run: echo ${{ github.run_number }}
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_NAME }} -p ${{ secrets.DOCKER_PASS }}
+      - name: Build Container image
+        run: docker build -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }} .
+      - name: Publish Docker image
+        run: docker push ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}
+  
