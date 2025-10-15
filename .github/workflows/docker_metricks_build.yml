@@ -32,9 +32,6 @@ jobs:
   docker_image_build_and_push_arm:
     name: Publish docker_metricks to Docker Hub (ARM)
     runs-on: ubuntu-latest
-    needs: []              
-    container:            # Добавляем использование ARM-контейнера
-      options: '--platform=linux/arm64'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,7 +46,7 @@ jobs:
       - name: Build Container image (ARM)
         env:
           PLATFORM: linux/arm64/v8
-        run: docker build -f Dockerfile.arm --platform=$PLATFORM -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-arm .
+        run: docker build -f Dockerfile.arm --platform=${{ PLATFORM }} -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-arm .
         
       - name: Publish Docker image
         run: docker push ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-arm
