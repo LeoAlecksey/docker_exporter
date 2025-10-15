@@ -9,9 +9,9 @@ jobs:
 
 ## Сборка Docker-image and Push on DockerHub ##
 ####################################################
-
-  docker_image_build_and_push:
-    name: Publish docker_metricks to Docker Hub
+#AMD
+  docker_image_build_and_push_amd:
+    name: Publish docker_metricks to Docker Hub (AMD)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,8 +23,30 @@ jobs:
 
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_NAME }} -p ${{ secrets.DOCKER_PASS }}
-      - name: Build Container image
-        run: docker build -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }} .
+      - name: Build Container image (AMD)
+        run: docker build -f Dockerfile.amd -t ${{ secrets.DOCKER_REPO }}-amd:v${{ github.run_attempt }}.${{ github.run_number }} .
       - name: Publish Docker image
-        run: docker push ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}
-  
+        run: docker push ${{ secrets.DOCKER_REPO }}-amd:v${{ github.run_attempt }}.${{ github.run_number }}
+
+# ARM
+  docker_image_build_and_push_arm:
+    name: Publish docker_metricks to Docker Hub (ARM)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+    
+      - name: Output Run Attempt
+        run: echo ${{ github.run_number }}
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_NAME }} -p ${{ secrets.DOCKER_PASS }} .
+        
+      - name: Build Container image (ARM)
+        env:
+          PLATFORM: linux/arm/v7 
+        run: docker build -f Dockerfile.arm --platform=$PLATFORM -t ${{ secrets.DOCKER_REPO }}-arm:v${{ github.run_attempt }}.${{ github.run_number }} .
+        
+      - name: Publish Docker image
+        run: docker push ${{ secrets.DOCKER_REPO }}-arm:v${{ github.run_attempt }}.${{ github.run_number }}
