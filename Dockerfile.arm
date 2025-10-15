@@ -2,6 +2,8 @@ FROM python:3.13
 LABEL developed_by='@LeoAlecksey'
 WORKDIR /usr/src/app
 COPY ./requirements.txt .
-RUN python -m pip install -r requirements.txt
+RUN apt-get update && apt-get install build-essential -y --no-install-recommends
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install -r requirements.txt
 COPY ./docker_metricks.py .
 CMD ["python3", "/usr/src/app/docker_metricks.py"]
