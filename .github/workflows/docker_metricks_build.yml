@@ -9,7 +9,7 @@ jobs:
 
 ## Сборка Docker-image and Push on DockerHub ##
 ####################################################
-AMD
+#AMD
   docker_image_build_and_push_amd:
     name: Publish docker_metricks to Docker Hub (AMD)
     runs-on: ubuntu-latest
