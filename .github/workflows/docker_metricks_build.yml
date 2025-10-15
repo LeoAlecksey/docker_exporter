@@ -24,7 +24,7 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_NAME }} -p ${{ secrets.DOCKER_PASS }}
       - name: Build Container image (AMD)
-        run: docker build -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-amd .
+        run: docker build -f Dockerfile.amd -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-amd .
       - name: Publish Docker image
         run: docker push ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-amd
 
@@ -46,7 +46,7 @@ jobs:
       - name: Build Container image (ARM)
         env:
           PLATFORM: linux/arm/v7 
-        run: docker build --platform=$PLATFORM -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-arm .
+        run: docker build -f Dockerfile.arm --platform=$PLATFORM -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-arm .
         
       - name: Publish Docker image
         run: docker push ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-arm
