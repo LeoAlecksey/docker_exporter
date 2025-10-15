@@ -1,4 +1,4 @@
-FROM python:3.13-arm64v8
+FROM python:3.13-arm64
 LABEL developed_by='@LeoAlecksey'
 WORKDIR /usr/src/app
 COPY ./requirements.txt .
