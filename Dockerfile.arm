@@ -1,0 +1,8 @@
+FROM python:3.13-arm64v8
+LABEL developed_by='@LeoAlecksey'
+WORKDIR /usr/src/app
+COPY ./requirements.txt .
+RUN python -m pip install --upgrade pip
+RUN python -m pip install -r requirements.txt
+COPY ./docker_metricks.py .
+CMD ["python3", "/usr/src/app/docker_metricks.py"]
