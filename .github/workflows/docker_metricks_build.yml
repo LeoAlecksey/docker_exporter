@@ -46,7 +46,7 @@ jobs:
       - name: Build Container image (ARM)
         env:
           PLATFORM: linux/arm64/v8
-        run: docker build -f Dockerfile.arm --platform=${{ PLATFORM }} -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-arm .
+        run: docker build -f Dockerfile.arm --platform=${PLATFORM} -t ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-arm .
         
       - name: Publish Docker image
         run: docker push ${{ secrets.DOCKER_REPO }}:v${{ github.run_attempt }}.${{ github.run_number }}-arm
