@@ -31,7 +31,7 @@ jobs:
 # ARM
   docker_image_build_and_push_arm:
     name: Publish docker_metricks to Docker Hub (ARM)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v4
         with:
