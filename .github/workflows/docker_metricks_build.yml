@@ -4,7 +4,9 @@ on:
   push:
     branches: 
     - main
-
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.yml'
 jobs:
 
 ## Сборка Docker-image and Push on DockerHub ##
