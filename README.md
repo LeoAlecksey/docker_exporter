@@ -64,7 +64,7 @@ Value mapping:
 
 ## Support and author
 
-Alexey Andreev (<Alexey.Andreev@atom.team>)
+Alexey Andreev
 
 ## License
 
